@@ -4,16 +4,27 @@
 // 1. nativestart
 // 2. nativestop
 //
+
 #include<jni.h>
 #include"log.h"
+#include <GLES/egl.h>
+#include <GLES/gl.h>
+#include <stdio.h>
 
-jint init(){
-    LOGI("nativeInit");
+jint init(JavaVM *jvm, jstring url){
+    LOGI("nativeInit ");
+
+//    JNI_CreateJavaVM
     return 0;
 }
 
+int nativeSetSurface(JavaVM *jvm, jobject surface){
+    LOGI("set surface");
+    return 0;
+}
 static JNINativeMethod sMethod[] = {
-        {"nativeInit", "()I", (void*)init}
+        {"nativeInit", "(Ljava/lang/String;)I", (void*)init},
+        {"nativeSetSurface", "(Ljava/lang/Object;)I",(void*)nativeSetSurface}
 };
 
 JNIEXPORT int JNI_OnLoad(JavaVM* vm, void* reserved) {
@@ -24,12 +35,13 @@ JNIEXPORT int JNI_OnLoad(JavaVM* vm, void* reserved) {
         return result;
     }
 
+        //함수 사이즈 제대로 받게끔 수정해야함
 #define GetMethod(className, sMethod) \
         jclass clazz = env->FindClass(className); \
         if(clazz == NULL){ \
             return -1; \
         } \
-        if(env->RegisterNatives(clazz, sMethod, 1) < 0){ \
+        if(env->RegisterNatives(clazz, sMethod, 2) < 0){ \
             return -1; \
         } \
 
