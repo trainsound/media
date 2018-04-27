@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
             @Override
             public void onClick(View v) {
                 Log.e(TAG, "start");
+                media.nativePlay();
             }
         });
 

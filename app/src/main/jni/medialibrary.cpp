@@ -5,16 +5,33 @@
 // 2. nativestop
 //
 
-#include<jni.h>
-#include"log.h"
-#include <GLES/egl.h>
-#include <GLES/gl.h>
+#include <jni.h>
 #include <stdio.h>
+#include "Utils/log.h"
+#include "Utils/Player.h"
 
-jint init(JavaVM *jvm, jstring url){
+static inline void MediaLibrary_setInstance(JNIEnv *env, jobject thiz, Player *p_obj);
+static inline Player* MediaLibrary_getInstance(JNIEnv *env, jobject thiz);
+
+jfieldID field;
+
+int init(JNIEnv *env, jobject thiz, jstring url){
     LOGI("nativeInit ");
 
-//    JNI_CreateJavaVM
+    Player *player = new Player(url);
+
+    MediaLibrary_setInstance(env, thiz, player);
+    return 0;
+}
+
+int play(JNIEnv* env, jobject thiz){
+    LOGI("nativeplay ");
+    Player *player = MediaLibrary_getInstance(env, thiz);
+    return 0;
+}
+
+int stop(){
+    LOGI("nativestop ");
     return 0;
 }
 
@@ -24,12 +41,15 @@ int nativeSetSurface(JavaVM *jvm, jobject surface){
 }
 static JNINativeMethod sMethod[] = {
         {"nativeInit", "(Ljava/lang/String;)I", (void*)init},
-        {"nativeSetSurface", "(Ljava/lang/Object;)I",(void*)nativeSetSurface}
+        {"nativeSetSurface", "(Ljava/lang/Object;)I",(void*)nativeSetSurface},
+        {"nativePlay", "()I",(void*)play},
+        {"nativeStop", "()I",(void*)stop}
 };
 
 JNIEXPORT int JNI_OnLoad(JavaVM* vm, void* reserved) {
     JNIEnv* env = NULL;
     jint result = -1;
+    int methodLength = sizeof(sMethod) / sizeof(sMethod[0]);
 
     if(vm->GetEnv((void**) &env, JNI_VERSION_1_6) != JNI_OK){
         return result;
@@ -41,11 +61,31 @@ JNIEXPORT int JNI_OnLoad(JavaVM* vm, void* reserved) {
         if(clazz == NULL){ \
             return -1; \
         } \
-        if(env->RegisterNatives(clazz, sMethod, 2) < 0){ \
+        if(env->RegisterNatives(clazz, sMethod, methodLength) < 0){ \
             return -1; \
         } \
 
     GetMethod("medialibrary/Medialibrary", sMethod);
 
     return JNI_VERSION_1_6;
+}
+
+Player *
+MediaLibrary_getInstance(JNIEnv *env, jobject thiz)
+{
+    Player *p_obj = MediaLibrary_getInstanceInternal(env, thiz);
+    if (!p_obj){
+        printf("error getInstance\n");
+    }
+        // throw_IllegalStateException(env, "can't get AndroidMediaLibrary instance");
+    return p_obj;
+}
+
+
+static void
+MediaLibrary_setInstance(JNIEnv *env, jobject thiz, AndroidMediaLibrary *p_obj)
+{
+    env->SetLongField(thiz,
+                      field,
+                      (jlong)(intptr_t)p_obj);
 }

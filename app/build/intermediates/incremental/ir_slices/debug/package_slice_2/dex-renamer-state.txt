@@ -1,4 +1,0 @@
-#Thu Apr 05 02:50:40 KST 2018
-base.0=C\:\\Users\\train\\Desktop\\Project\\player\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\2
-path.0=classes.dex
-renamed.0=classes.dex

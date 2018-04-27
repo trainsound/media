@@ -1,5 +1,5 @@
-C:/Users/train/Desktop/Project/player/app/src/main/obj/local/x86/objs/medialib/medialibrary.o: \
-  C:/Users/train/Desktop/Project/player/app/src/main/jni/medialibrary.cpp \
-  C:/Users/train/Desktop/Project/player/app/src/main/jni/log.h
+/Users/lena/Desktop/project/project/media/app/src/main/obj/local/x86/objs/medialib/medialibrary.o: \
+  /Users/lena/Desktop/project/project/media/app/src/main/jni/medialibrary.cpp \
+  /Users/lena/Desktop/project/project/media/app/src/main/jni/log.h
 
-C:/Users/train/Desktop/Project/player/app/src/main/jni/log.h:
+/Users/lena/Desktop/project/project/media/app/src/main/jni/log.h:
