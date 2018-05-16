@@ -4,9 +4,23 @@
 
 #include "Thread.h"
 
+//private:
+//pthread_t thread;
+//bool runFlag;
+//public :
+//Thread(void *arg);
+//~Thread();
+//virtual void run();
+//
+//bool getRunnableFlag();
+//int threadStop();
+//int threadPause();
+//int threadResume();
 void* pthreadCreate(void* arg){
     Thread *thread = (Thread*)arg;
     thread->run();
+
+    return NULL;
 }
 
 Thread::Thread(void* arg){
@@ -27,4 +41,6 @@ bool Thread::getRunnableFlag(){
 
 int Thread::threadStop(){
     this->runFlag = false;
+
+    return 0;
 }

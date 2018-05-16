@@ -13,6 +13,10 @@ import medialibrary.Medialibrary;
 
 public class MainActivity extends AppCompatActivity implements SurfaceHolder.Callback{
 
+    static {
+        System.loadLibrary("medialib");
+    }
+
     private Button startBtn, stopBtn;
     private String TAG = "MAINACTIVITY";
 
@@ -27,7 +31,8 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
         startBtn = (Button)findViewById(R.id.startBtn);
         stopBtn = (Button)findViewById(R.id.stoptBtn);
 
-        media.nativeInit("/sdcard/media/boyoung.mp4");
+        media.initNative("/sdcard/media/boyoung.mp4");
+//        media.nativeInit("/sdcard/media/boyoung.mp4");
 
         surfaceview = (SurfaceView)findViewById(R.id.surfaceView);
         surfaceview.getHolder().addCallback(this);
