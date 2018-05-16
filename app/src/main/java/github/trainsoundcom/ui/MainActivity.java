@@ -31,8 +31,8 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
         startBtn = (Button)findViewById(R.id.startBtn);
         stopBtn = (Button)findViewById(R.id.stoptBtn);
 
-        media.initNative("/sdcard/media/boyoung.mp4");
-//        media.nativeInit("/sdcard/media/boyoung.mp4");
+//        media.initNative("/sdcard/media/boyoung.mp4");
+        media.nativeInit(media,"/sdcard/media/boyoung.mp4");
 
         surfaceview = (SurfaceView)findViewById(R.id.surfaceView);
         surfaceview.getHolder().addCallback(this);

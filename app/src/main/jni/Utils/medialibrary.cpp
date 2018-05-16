@@ -48,12 +48,10 @@ MediaLibrary_getInstance(JNIEnv *env, jobject thiz)
 static void
 MediaLibrary_setInstance(JNIEnv *env, jobject thiz, Player *p_obj)
 {
-    env->SetLongField(thiz,
-                      field.instanceId,
-                      (jlong)(intptr_t )p_obj);
+    env->SetIntField(thiz, field.instanceId, (jlong)(intptr_t )p_obj);
 }
 
-int init(JNIEnv *env, jobject thiz, jstring url){
+int init(JNIEnv *env, jobject thiz, jobject myobj, jstring url){
     LOGI("nativeInit ");
     const char *convertUrl = env->GetStringUTFChars(url, 0);
     Player *player = new Player(convertUrl, &field);
@@ -79,7 +77,7 @@ int nativeSetSurface(JavaVM *jvm, jobject surface){
 }
 
 static JNINativeMethod sMethod[] = {
-        {"nativeInit", "(Ljava/lang/String;)I", (void*)init},
+        {"nativeInit", "(Lmedialibrary/Medialibrary;Ljava/lang/String;)I", (void*)init},
         {"nativeSetSurface", "(Ljava/lang/Object;)I",(void*)nativeSetSurface},
         {"nativePlay", "()I",(void*)play},
         {"nativeStop", "()I",(void*)stop}
